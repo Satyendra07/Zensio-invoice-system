@@ -1,0 +1,53 @@
+<form name="invoiceForm"  method="post">
+  
+    Open Seat: <input type="number" name="open_seat" id="open_seat">
+    <br/>
+    Cabin Seat: <input type="number" name="cabin_seat" id="cabin_seat">
+    <br/>
+    Conf Room Hrs: <input type="number" name="conf_room" id="conf_room">
+    <br/>
+    Meal: <input type="number" name="meal" id="meal">
+    <br/>
+    <button type='button' onclick="generateInvoice()">submit</button>
+    
+</form>
+
+<p> <span id='openSeatCount'></span> Open Seats : <span id="openSeatValue"></span>  </p>
+<p> <span id='cabinSeatCount'></span> Cabin Seats : <span id="cabinSeatValue"></span>  </p>
+<p> <span id='confCount'></span> hours of Conference Room usage : <span id="confValue"></span>  </p>
+<p> <span id='mealCount'></span> Meals : <span id="mealValue"></span>  </p>
+<p> Total : <span id="totalValue"></span>  </p>
+<p> Total GST : <span id="gstValue"></span>  </p>
+
+<script>
+
+  function generateInvoice(value){
+
+  const openSeat = document.getElementById('open_seat').value || 0;
+  const cabinSeat = document.getElementById('cabin_seat').value || 0;
+  const conf_room = document.getElementById('conf_room').value || 0;
+  const meal = document.getElementById('meal').value || 0;
+
+  const free_conf_hrs = openSeat*5 + cabinSeat*10;
+  const chargableConf_hrs = (conf_room - free_conf_hrs) > 0 ?  (conf_room - free_conf_hrs) : 0;
+  const opetSeatCharge = openSeat*5000;
+  const cabinSeatCharge = cabinSeat*10000;
+  const confRoomCharge = chargableConf_hrs*200;
+  const mealCharge = meal*100;
+
+  const total = opetSeatCharge  + cabinSeatCharge  +confRoomCharge + mealCharge;
+  const gst = total*.18;
+
+  document.getElementById("openSeatCount").innerHTML=openSeat;
+  document.getElementById("cabinSeatCount").innerHTML=cabinSeat;
+  document.getElementById("confCount").innerHTML=conf_room;
+  document.getElementById("mealCount").innerHTML=meal;
+  document.getElementById("openSeatValue").innerHTML=opetSeatCharge;
+  document.getElementById("cabinSeatValue").innerHTML=cabinSeatCharge;
+  document.getElementById("confValue").innerHTML=confRoomCharge;
+  document.getElementById("mealValue").innerHTML=mealCharge;
+  document.getElementById("totalValue").innerHTML=total;
+  document.getElementById("gstValue").innerHTML=gst;
+
+  }
+  </script>
